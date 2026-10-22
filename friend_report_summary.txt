@@ -1,0 +1,986 @@
+
+==================================================
+PAGE 1
+==================================================
+A Report on
+VayuRakshak AI — Intelligent Web-Based Air Protection &
+Human-in-the-Loop Advisory System
+IDEA LAB-V (Course code: 12212506)
+Theme: Urban System
+of
+Third Year (TE Sem-V) Computer Engineering
+Academic Year 2026-2027
+by
+Yadav Shubham Laxman
+TE / CMPN-C
+Roll no. 74
+Under the guidance of
+Dr. Uma Goradiya
+AY 2026-2027
+DEPARTMENT OF COMPUTER ENGINEERING
+IQAC Format Number: 26_E
+==================================================
+PAGE 2
+==================================================
+Certificate
+This is to certify that Mr. Yadav Shubham Laxman Class: TE C Roll No. 74 Exam Seat No.
+____________ of Fifth Semester of Degree in Computer Engineering has completed the
+required number of Practical’s / Term Work / Project in the subject IDEA LAB – V from the
+Department of Computer Engineering during the academic year of 2026 - 2027 as prescribed
+in the curriculum.
+Faculty in-Charge Date:
+External Examiner Date:
+Seal of
+Institution
+ACKNOWLEDGEMENT
+Special thanks to Dr . Uma Goradiya for guiding me throughout my Idea Lab-V project on
+“Municipal Waste Collection & Complaint Tracker”. Her expertise and constant guidance in
+designing and troubleshooting projects helped me to complete this project effectively.
+Special thanks to Head of Department Dr. Bhushan kumar Nemade Sir for his constant
+motivation, without which this work would not have become successful.
+I am also thankful to my Principal Dr. Umesh Bhadade Sir for his continuous encouragement
+throughout the process.
+IQAC Format Number: 26_E
+==================================================
+PAGE 3
+==================================================
+I would also like to thank the Department of Computer Engineering for providing online/offline
+facilities and labs, which helped me constantly in increasing my technical knowledge and in
+writing this report.
+INDEX
+Sr. No Name Of Topic Page No
+1 Abstract 1
+2 Theme and Problem Statement 2
+3 Introduction 3
+4 Literature Review 4
+5 Existing Systems 5
+6 Proposed Solution 1 6
+7 Proposed Solution 2 7
+8 Proposed Recommended Solution 8
+9 Flow Diagram / Architecture of Proposed System 9
+10 Technical Requirements (HW/SW) 32
+IQAC Format Number: 26_E
+==================================================
+PAGE 4
+==================================================
+11 Applications 33
+12 Future Scope 34
+13 Conclusion 35
+14 References 36
+IQAC Format Number: 26_E
+==================================================
+PAGE 5
+==================================================
+1. ABSTRACT
+Severe air pollution is one of the most critical public health hazards facing urban populations,
+yet individual response mechanisms remain predominantly reactive, fragmented, and limited
+to passive air quality index (AQI) readings. VayuRakshak AI is an intelligent, privacy-
+preserving air protection and proactive health advisory platform designed to bridge the gap
+between atmospheric hazard monitoring and everyday preventive action under the ethos “We
+don’t just inform. We protect.” The platform connects users with real-time hyperlocal air
+quality data, regional satellite fire signals (NASA FIRMS integration points), and 72-hour
+pollution forecasts to deliver actionable exposure-mitigation strategies.
+The system empowers users through an explainable Indoor Protection Risk Score, intelligent
+commute exposure routing (identifying cleaner alternatives with up to 28%–43% estimated
+exposure reduction and delayed-departure planning), and a smart Calendar Guard that
+proactively reschedules outdoor activities away from toxic peak windows. To safeguard
+indoor environments, VayuRakshak incorporates an automated Protection Autopilot that
+generates approval-bound air purifier workflows with transparent audit logs and manual
+override controls. In addition, an integrated conversational assistant—Vayu Guide—provides
+grounded local retrieval (RAG) over curated health and atmospheric documentation,
+supplemented by multi-modal speech narration via Edge TTS and guided interface
+walkthroughs.
+The prototype is built on a modern full-stack web architecture featuring a Next.js
+16 and React 19 frontend, TypeScript, Tailwind CSS, and a modular Node.js backend
+managed via npm workspaces. Security and privacy are enforced through authenticated server
+sessions, salted scrypt password hashing, HttpOnly cookies, and strict local evaluation
+boundaries ensuring user telemetry and preferences remain strictly user-controlled without
+unauthorized third-party leakage. VayuRakshak demonstrates how a low-overhead, human-in-
+the-loop software platform can transform passive environmental awareness into explainable,
+automated, and accountable personal air defense.
+2. Theme and Problem Statement
+• Theme: Urban System (Summary)
+• The Urban System theme examines the core infrastructural and environmental lifelines
+that sustain city life—such as air quality management, transport networks, health
+monitoring, and municipal planning—and investigates how accessible, human-centric
+technology can make urban living healthier, more transparent, and proactive. Rather than
+1
+==================================================
+PAGE 6
+==================================================
+• treating urban air pollution as an unmanageable background condition, VayuRakshak
+AI addresses the urban respiratory protection system of a modern metropolitan city by
+converting raw, fragmented environmental data into actionable, everyday preventive
+interventions for citizens and urban administrators.
+• SDG 11: Sustainable Cities & Communities
+• Hyperlocal Resilience: Equips urban dwellers with forward-looking 72-hour pollution
+forecasts, cleaner transit corridors, and hotspot awareness to build climate-resilient urban
+communities.
+• Urban Mobility Integration: Analyzes high-exposure travel corridors and dynamically
+suggests cleaner commuting routes and departure windows, reducing citizen exposure
+across dense city transit networks.
+• SDG 3: Good Health & Well-being
+• Preventative Health Defense: Directly mitigates the health impact of toxic particulate
+matter (PM2.5/PM10) and peak AQI episodes, particularly for vulnerable groups with
+respiratory and cardiovascular sensitivities.
+• Smart Indoor Air Governance: Automatically regulates indoor living environments
+through an explainable Indoor Protection Risk Score and automated purifier routines,
+minimizing prolonged exposure to hazardous ambient air.
+• SDG 13: Climate Action
+• Actionable Hazard Awareness: Incorporates regional satellite thermal anomaly tracking
+(NASA FIRMS fire hotspots) and agricultural burning indicators to give citizens and local
+bodies early warnings of impending smog episodes.
+• Behavioral Shift: Encourages low-emission commuter choices and schedule adaptations
+(via Calendar Guard) during peak environmental stress hours.
+• Problem Statement :
+• Urban air quality alerts remain fragmented and purely passive, delivering retrospective or
+static index numbers without personalized guidance; consequently, citizens face
+unavoidable peak pollution exposure during commutes and outdoor activities, while
+indoor spaces remain vulnerable due to a lack of automated, explainable, and privacy-
+preserving environmental protection controls.
+2
+==================================================
+PAGE 7
+==================================================
+• Explanation
+• Passive Information vs. Active Protection: Current urban air quality platforms function
+merely as digital notice boards (reporting raw AQI values like 286 or "Very Poor"),
+leaving citizens uncertain about what practical actions to take, when to travel, or how to
+reduce their inhaled pollution dose.
+• Unmitigated Transit Exposure: Commuters are forced to rely on standard navigation
+applications that optimize solely for travel duration or distance, inadvertently funneling
+thousands of citizens through severe pollution choke points and busy arterial roads during
+peak toxic hours.
+• Disconnected Indoor Environments & Schedule Inefficiencies: Everyday calendar
+planning (outdoor workouts, commutes, meetings) is completely disconnected from real-
+time and forecasted atmospheric conditions. Furthermore, indoor purifiers and air
+handlers are operated manually and haphazardly without predictive scheduling or
+quantifiable indoor risk scores.
+• Need for a Unified, Human-in-the-Loop Protective Platform: A sustainable urban
+solution requires a centralized, privacy-conscious platform that bridges ambient sensor
+data, satellite observations, and predictive analytics with actionable mitigations—
+featuring an explainable risk scoring mechanism, exposure-optimized route navigation,
+calendar protection, and consent-driven home automation workflows where the user
+always remains in control.
+3
+==================================================
+PAGE 8
+==================================================
+3. Introduction
+Urban agglomerations and metropolitan regions across India face hazardous surges in ambient
+air pollution, especially during the post-monsoon and winter seasons. According to
+environmental monitoring records from the Central Pollution Control Board (CPCB) and state
+pollution control boards across the National Capital Region (NCR) and major metropolitan
+belts, particulate matter concentrations ($PM_{2.5}$ and $PM_{10}$) routinely spike past
+250–400 $\mu g/m^3$, entering the “Very Poor” and “Severe” Air Quality Index (AQI)
+categories. Managing and mitigating exposure across dense urban zones demands proactive
+coordination between environmental monitoring networks, everyday commuters, residential
+environments, and civic health advisories.
+Citizens currently monitor air quality through multiple independent portals and applications,
+including the CPCB Sameer portal, SAFAR-India, the national Air Quality Early Warning
+System (AQEWS), and global commercial weather services. While having multiple monitoring
+channels provides raw data, these public platforms primarily serve as retrospective notification
+boards. They deliver static index numbers without explaining specific indoor vulnerability,
+calculating personalized commute exposure, or guiding timely preventive action. For an
+everyday urban resident, the core challenge is not simply observing an AQI number of 286, but
+knowing what specific travel routes to take, when to delay outdoor exposure, and how to govern
+indoor living spaces safely.
+Modern software systems can bridge this gap between passive environmental telemetry and
+actionable, personal protection without requiring costly or proprietary sensor hardware. A
+centralized web application that evaluates exposure deltas along transit corridors, computes an
+explainable indoor risk metric, coordinates calendar schedules with pollution forecasting, and
+automates indoor purifier policies with strict user consent can transform passive awareness into
+proactive defense. Such a system also generates localized insights, including peak exposure
+windows, cleaner route comparison benchmarks, and regional fire hotspot signals (e.g., via
+NASA FIRMS) that aid in everyday decision-making.
+The VayuRakshak AI platform presented in this report is an end-to-end prototype of such an air
+protection and proactive health defense system. Operating under the guiding philosophy “We
+don’t just inform. We protect,” it features an integrated suite of modules including the
+4
+==================================================
+PAGE 9
+==================================================
+Tomorrow's Air Plan forecast, clean route optimizer, an explainable Indoor Protection Risk
+Score (0–100), Calendar Guard scheduling, Protection Autopilot automation workflows with
+audit logging, and an interactive grounded assistant (Vayu Guide) equipped with text-to-speech
+narration. The system is built on a full-stack architecture using Next.js 16, React 19, TypeScript,
+and a dedicated Node.js backend. The remaining sections describe the problem context, the
+existing literature, alternative solutions considered, the proposed architectural design,
+implementation details, and screenshots of the working prototype.
+4. Literature Review
+Author(s) and Paper Title Year Journal Key Contribution
+Evaluates urban commuter routes using low-
+A Smart Air Quality Monitoring
+cost mobile particulate sensors and GPS
+and Route Recommendation IEEE Internet of
+2021 tracking. Proposes graph-based routing
+System for Urban Commuters Things Journal
+algorithms that trade travel duration for
+(S. Kumar et al.)
+reduced cumulative pollutant intake.
+Comprehensive survey of 180 papers (2018–
+IoT-Driven Urban Air Pollution
+Atmospheric 2024) analyzing machine learning forecasting
+Forecasting and Public Health
+Pollution models and IoT air networks. Identifies that
+Advisory Systems: A Systematic 2024
+Research most existing platforms lack personalized
+Review
+(Elsevier) mitigation, explainable scoring, and privacy-
+(M. R. Hernandez & A. Sen)
+preserving user controls.
+Deep Learning-Based 72-Hour Integrates ground-level CPCB station data with
+AQI Prediction with Satellite Fire Environmental NASA FIRMS satellite thermal anomaly
+Anomaly Correlation 2025 Modelling & hotspots to forecast 24-to-72 hour PM2.5
+(P. Sharma, R. Verma, & N. Software spikes during seasonal crop-residue burning in
+Gupta) North India.
+Explores automated HVAC and indoor air
+Human-in-the-Loop Smart Indoor purifier triggering based on outdoor AQI
+Air Quality Management and Building and infiltration. Highlights that user consent,
+2025
+Actuation in Smart Buildings Environment auditability, and override mechanisms are
+(K. D. Patel & H. Zhang) essential to prevent unneeded power draw and
+user distrust.
+5
+==================================================
+PAGE 10
+==================================================
+A Grounded Retrieval- Develops a domain-specific retrieval-
+Augmented Advisory System for Journal of augmented assistant (RAG) providing non-
+Respiratory Wellness during 2026 Biomedical diagnostic respiratory wellness guidance based
+Severe Smog Informatics on WHO and AirNow public health guidelines,
+(A. Banerjee et al.) preventing hallucinations in air health queries.
+Summary: Most of the reviewed work focuses either on low-cost hardware sensor deployments,
+raw forecasting algorithms (LSTM, XGBoost), or purely static mobile dashboards that report
+ambient AQI. Very few platforms bridge ambient forecasts with commute exposure calculations,
+and fewer still integrate explainable indoor risk scoring with approval-bound home automation
+and grounded interactive health guidance under strict user-controlled privacy. The proposed
+VayuRakshak AI prototype addresses these gaps through an explainable, software-driven, and
+human-in-the-loop protection platform.
+5. Existing Systems
+1. Government Air Quality Portals & Mobile Apps (e.g., CPCB Sameer, SAFAR-India,
+AQEWS)
+The Central Pollution Control Board (CPCB) and SAFAR operate official portals and the
+Sameer mobile application to report National Air Quality Index (NAQI) figures from
+continuous ambient air quality monitoring stations (CAAQMS). They categorize pollution
+levels into standard bands (Good to Severe) and issue broad public health advisories.
+Cons:
+• Purely Passive & Retrospective: They function primarily as digital notice boards,
+displaying past or current station averages without forward-looking, personalized
+mitigation advice.
+• No Commute or Transit Guidance: They do not correlate travel corridors with pollution
+hot spots or suggest cleaner alternatives and delayed-departure windows for daily
+commuters.
+• Disconnected from Indoor Spaces: No guidance or mechanism is provided to assess
+how ambient smog infiltrates homes or how indoor air purifiers should be operated.
+6
+==================================================
+PAGE 11
+==================================================
+2. Commercial Weather Apps & IoT Air Monitors (e.g., IQAir, Plume Labs,
+AccuWeather)
+Commercial services combine satellite observations with ground stations, and proprietary IoT
+air monitors (e.g., consumer PM2.5 monitors) allow users to monitor ambient and room air
+quality on mobile dashboards.
+Cons:
+• Hardware-Dependent & Cost-Prohibitive: Effective indoor protection typically requires
+purchasing expensive, proprietary sensors and smart air purifiers for every room.
+• Opaque Risk Metrics: They offer generic ratings without an explainable breakdown of
+risk factors (e.g., duration of exposure, outdoor infiltration, room volume, or individual
+sensitivity).
+• Black-Box Automation: Connected smart appliances either run continuously (wasting
+energy and filter life) or act autonomously without transparent user approval, audit
+trails, or clear cancellation controls.
+3. Standard Map & Navigation Systems (e.g., Google Maps, Apple Maps)
+Everyday commuters rely on commercial navigation applications to plan travel across urban
+regions. These tools optimize routes dynamically based on real-time traffic congestion, tolls,
+and physical travel distance.
+Cons:
+• Zero Exposure Optimization: They route commuters exclusively for speed or distance,
+frequently funneling pedestrians, two-wheeler riders, and car commuters directly
+through severe pollution hot spots and stagnant traffic choke points.
+• No Temporal Exposure Planning: They do not evaluate exposure deltas across
+departure windows (e.g., delaying a trip by 30 minutes to bypass a morning AQI
+inversion peak).
+• Lack of Integrated Calendar Protection: They do not sync with personal schedules to
+flag or reschedule outdoor workouts and travel away from hazardous atmospheric
+conditions.
+Gap Identified:
+7
+==================================================
+PAGE 12
+==================================================
+Existing systems either provide passive ambient numbers, require costly proprietary IoT
+hardware, or optimize transit strictly for travel time while ignoring inhaled pollutant
+exposure. VayuRakshak AI bridges this gap through a human-in-the-loop, privacy-centric
+platform that actively protects citizens across both transit and indoor living environments.
+6. Proposed Solution 1
+IoT Dedicated Hardware Sensor & Smart Purifier Appliance Mesh:
+In this approach, personal low-cost particulate matter sensor nodes ($PM_{2.5}$ / $PM_{10}$,
+optical dust sensors like PMS5003 connected to an ESP32 microcontroller) are deployed in
+every room and carried by commuters as wearable monitors. These hardware units continuously
+stream real-time air quality metrics over Wi-Fi or cellular networks to a custom cloud IoT hub
+(such as AWS IoT Core or MQTT broker). Connected smart air purifiers are hard-wired or
+interfaced via custom relays to trigger instantly whenever indoor particulate thresholds are
+breached.
+This approach offers real-time physical readings directly at the user’s exact coordinate and
+automates room purification without relying on regional atmospheric interpolations. However,
+deploying custom hardware nodes requires substantial upfront capital expenditure, battery
+management, ongoing calibration, and sensor maintenance. In outdoor and transit scenarios,
+optical sensor optics degrade quickly due to dust and moisture. Furthermore, demonstrating a
+physical hardware mesh across multiple commuter corridors and room settings is cost-
+prohibitive and impractical for a student semester timeline, while still failing to provide
+intelligent calendar planning or grounded health advisory support.
+Cons:
+1. High hardware cost: Requires microcontrollers, particulate sensors, enclosure
+fabrication, and power supplies for every monitored room and wearable.
+2. Sensor calibration & degradation: Optical dust sensors suffer from drift, calibration
+errors in varying humidity, and physical fouling in high-smog conditions.
+3. Hardware deployment overhead: Impractical to scale, deploy, and benchmark across
+citywide commuter corridors within a semester project timeline.
+4. Network and battery constraints: Wearable and outdoor sensor nodes require continuous
+battery management and uninterrupted cellular/Wi-Fi telemetry.
+8
+==================================================
+PAGE 13
+==================================================
+7. Proposed Solution 2
+Native Mobile App with Continuous GPS Telemetry & Cloud Push Notifications:
+This approach provides a native mobile-first application (built on Android/iOS via React Native
+or Flutter) that continuously tracks the user's real-time background GPS coordinates. The app
+polls live traffic and environmental APIs in the background, calculates on-the-go exposure
+during commutes, and sends aggressive push notifications or SMS alerts when the user
+approaches an active pollution hotspot or enters a peak AQI zone.
+Continuous location telemetry allows automatic detection of commuter movement without
+requiring manual route lookups, and native system push notifications provide immediate alerts.
+However, running continuous background GPS tracking introduces heavy battery drain and
+raises severe user privacy and location-surveillance concerns. In addition, developing,
+maintaining, and publishing native applications across multiple mobile OS ecosystems involves
+longer release cycles, app-store overhead, and recurring costs for cloud push/SMS gateways.
+More importantly, it shifts focus onto intrusive alerting rather than an explainable, controllable,
+privacy-preserving desktop and responsive web interface where users can review detailed audit
+logs, explore forecast models, and manage automation approvals. For these reasons, continuous
+background GPS tracking and dedicated native apps are preserved as future scope.
+Cons:
+1. Severe privacy and surveillance risks: Continuous background GPS tracking exposes
+personal movement telemetry to potential privacy leaks.
+2. Battery and device drain: Persistent background geolocation and polling severely
+deplete mobile device battery life.
+3. Higher development overhead: Requires cross-platform mobile development
+(Android/iOS) alongside cloud push notification pipelines (Firebase Cloud
+Messaging/APNs), adding development time and recurring gateway expenses.
+4. App store barriers: Requires users to download, permission-grant, and repeatedly
+update mobile application binaries.
+5. Intrusive alerting over proactive control: Tends to produce notification fatigue rather
+than providing an explainable, auditable dashboard for route comparison and human-
+in-the-loop home automation.
+9
+==================================================
+PAGE 14
+==================================================
+8. Proposed Recommended Solution
+VayuRakshak AI — Intelligent Web-Based Air Protection & Human-in-the-Loop
+Advisory System:
+The recommended solution is a centralized, privacy-preserving web platform that bridges
+environmental forecasting, transit exposure reduction, indoor air risk governance, and
+grounded conversational health advisories under the ethos “We don’t just inform. We
+protect.” A modular Node.js backend serves structured environmental contracts, exposure
+calculations, and automation state, while a modern Next.js 16 / React 19 browser frontend
+provides an accessible, responsive dashboard across desktops, tablets, and smartphones
+without requiring any app installations.
+Rather than relying on expensive hardware deployments or invasive mobile background GPS
+tracking, VayuRakshak AI utilizes standard web APIs and curated atmospheric fixtures to
+deliver tangible protections. Commuters can evaluate routes side-by-side to choose lower-
+exposure corridors (achieving up to 28%–43% estimated exposure reduction) and leverage
+delayed-departure scenarios to avoid peak morning pollution spikes. For indoor spaces, the
+platform calculates an explainable Indoor Protection Risk Score (0–100) and operates
+a Protection Autopilot that prepares pre-emptive air purifier schedules with explicit approval
+workflows ("Allow once"), cancellation controls, and immutable audit logs. The system also
+integrates Calendar Guard to reschedule high-risk outdoor activities and features Vayu Guide,
+a local retrieval-augmented (RAG) assistant with voice narration (Edge TTS) that delivers
+source-grounded respiratory health advice.
+Pros:
+1. Feasible & Low-Cost: Operates as a pure software web architecture needing no
+proprietary sensor hardware or expensive cloud appliances; can be built, tested, and
+demonstrated reliably within a semester project cycle.
+2. Complete Protective Workflow: Bridges the entire life cycle of air defense—from 72-
+hour peak forecasting and regional fire tracking (NASA FIRMS) to commute route
+comparison, calendar adaptation, and indoor automation.
+3. Explainability & Human-in-the-Loop: Risk scores (74/100 indoor risk baseline) are
+fully broken down by quantifiable factors; automation runs strictly under user consent
+with auditable logs, single-click approvals, and pause/cancellation controls.
+10
+==================================================
+PAGE 15
+==================================================
+4. Actionable Exposure Reduction: Moves beyond passive AQI numbers by calculating
+tangible exposure deltas along travel corridors and identifying cleaner departure
+windows.
+5. Robust Security & Privacy: Implements salted scrypt password hashing, SHA-256
+session digests, HttpOnly/SameSite cookies, and strictly local evaluation
+boundaries—ensuring personal schedules and wellness data are never sold or leaked.
+6. Universally Accessible: Responsive modern web interface (with dark mode, WebGL
+atmospheric globe, mobile fallbacks, keyboard-accessible tours, and voice narration)
+that runs seamlessly on any device browser without app store friction.
+7. Clear Growth Path: External live APIs (CPCB/WAQI, Open-Meteo, NASA FIRMS,
+Google Calendar sync, and home IoT bridges like Home Assistant/MQTT) can be
+plugged directly into the backend adapter boundaries as future enhancements.
+8. Societal & SDG Fit: Aligns with SDG 3 (Good Health & Well-being), SDG 11
+(Sustainable Cities & Communities), and SDG 13 (Climate Action) by transforming
+passive smog awareness into preventive urban health defense.
+9. Flow Diagram / Architecture of Proposed System
+VayuRakshak AI Architecture:
+The system follows a modular 3-layer (Three-Tier) architecture, separating presentation,
+application logic, and data persistence for heightened security, modularity, and maintainability:
+1. Presentation Layer (Frontend):
+• Built with Next.js 16 and React 19 using TypeScript and Tailwind CSS.
+• Provides responsive user interfaces including the Tomorrow's Air
+Plan dashboard, Route Exposure Comparison, Calendar Guard, Protection
+Autopilot, and Vayu Guide.
+• Includes interactive visualization components such as a lightweight WebGL/CSS
+Atmospheric Globe and geospatial pollution maps.
+• Operates in any standard browser across laptops and mobile devices without
+requiring app installation.
+2. Client-Server Communication:
+11
+==================================================
+PAGE 16
+==================================================
+• The frontend communicates via the browser's fetch API using JSON payloads
+through same-origin Next.js API routes (/api), which forward requests to the core
+backend.
+• User authentication state is maintained securely using HttpOnly, SameSite=Lax
+session cookies to prevent cross-site scripting (XSS) credential theft.
+3. Application Layer (Node.js API & Proxy Backend):
+• The backend runs on Node.js with environment validation and strict adapter
+boundaries.
+• Security & Auth: Verifies sessions, performs salted scrypt password hashing,
+and limits authentication attempts per process.
+• Business Logic Services: Includes the clean-route exposure calculator, the
+explainable Indoor Protection Risk Score engine (0–100), the Autopilot
+automation scheduler, and the non-diagnostic wellness assessment module.
+• Grounded Advisory Engine (Vayu Guide): Implements local retrieval-
+augmented generation (RAG) over curated public health documents, paired with
+an optional Python Edge TTS bridge for voice narration.
+• External Adapter Boundaries: Ingestion and contract layers designed for live
+environmental data providers (CPCB/WAQI, NASA FIRMS fire signals, and
+Open-Meteo).
+4. Data & Storage Layer:
+• Persistent Account Store: Managed via a resilient, atomic file-locked account
+repository (accounts.json) storing salted hashes and SHA-256 session digests.
+• Curated Document Index: Stores indexed markdown knowledge chunks for
+local RAG retrieval without external third-party API exposure.
+• Shared Fixture & Scenario State: Shared TypeScript models, contracts, and
+validated demographic scenarios ensuring deterministic baseline demos.
+5. Human-in-the-Loop Governance:
+• Every automation action (e.g., triggering a purifier schedule) strictly enforces
+consent transitions (PROPOSED → APPROVED / REJECTED →
+COMPLETED / CANCELLED) backed by an auditable execution log.
+12
+==================================================
+PAGE 17
+==================================================
+Fig. 1: Three-tier architecture of the system
+13
+==================================================
+PAGE 18
+==================================================
+Flow Diagram
+The diagram below shows of how the system actually works
+14
+==================================================
+PAGE 19
+==================================================
+Database Design (ER Diagram)
+Fig. 3: Entity-relationship diagram
+15
+==================================================
+PAGE 20
+==================================================
+11. Code Implementation (Explanation)
+1. Data Model (The Foundation)
+The system is built on TypeScript interfaces and schema contracts shared across both services
+(in shared/src/types/ and shared/src/data/):
+• Core
+Entities: User, Conditions, ForecastPoint, RouteOption, CalendarEvent, AutomationR
+ule, ApprovalRecord, and HealthSummary.
+• Enumerations & Strict Types: Type safety is guaranteed at compile time through fixed
+union types:
+• AQICategory: "Good" | "Moderate" | "Poor" | "Very Poor" | "Severe"
+• TravelMode: "Walking" | "Cycling" | "Two-wheeler" | "Car" | "Metro"
+• AutopilotScope: "once" | "always"
+• AutomationStatus: "proposed" | "scheduled-demo" | "completed" | "cancelled"
+• The Route & Risk Models: The route model calculates distance, duration, and
+exposure delta against the fastest route baseline. The indoor protection model stores
+ambient AQI, particulate penetration factor ($PM_{2.5}$ infiltration), room volume,
+and filtration efficiency to generate an explainable 0–100 risk score (74/100 baseline).
+2. The Repository & Storage Layer (Data Access)
+• Atomic Persistent Account Store: User accounts are managed via an atomic file-
+locked storage engine (accounts.json) with dedicated concurrency protection in the
+runtime environment.
+• Envelope Contracts & Fixture State: Data access is abstracted through envelope
+patterns (DataEnvelope<T>), tagging each record with metadata (data, source: "demo"
+| "live" | "cached", fetchedAt, and confidence).
+• Grounded Document Index: Curated markdown documents
+in frontend/content/*.md are pre-indexed into chunked JSON structures (npm run
+index:content), enabling ultra-fast local keyword ranking and retrieval without
+requiring expensive third-party vector databases.
+16
+==================================================
+PAGE 21
+==================================================
+3. The Service Layer (The Brain)
+• Exposure & Routing Engine: Evaluates transit corridors dynamically, computing
+travel duration vs. pollution intake trade-offs (e.g., demonstrating a 28% to 43% lower
+exposure reduction on cleaner detour corridors).
+• Indoor Risk Engine: Computes the explainable Indoor Protection Risk Score, breaking
+down the aggregate index into quantifiable, transparent factors rather than an opaque
+black box.
+• Autopilot Automation Service: Governs smart purifier activation rules. Enforces
+human-in-the-loop policies where actions require explicit authorization, writes
+auditable execution logs, and supports instantaneous cancellation.
+• Calendar Guard Service: Cross-references the 72-hour pollution forecast curve against
+scheduled events, identifying hazardous peak slots (such as morning inversion
+windows) and suggesting lower-AQI reschedule alternatives while keeping original
+events intact.
+• Vayu Guide & Speech Bridge: Implements a local retrieval-augmented engine that
+fetches verified snippets from curated guidelines; an optional Python FastAPI bridge
+(tts-service) interfaces with Edge TTS for client-side audio playback.
+4. The Controller & API Layer (The Gateway)
+The application layer exposes REST API routes through Next.js server endpoints (/api/*),
+proxying to the backend service. Input payloads are strictly validated against TypeScript
+contracts. All errors return a standardized JSON structure with status codes, error
+descriptions, and timestamps.
+17
+==================================================
+PAGE 22
+==================================================
+Access Level Method Endpoint (/api) Purpose
+Register a new user, issue
+Public POST /auth/register, /auth/login
+secure session
+One-click sign-in to the
+Public POST /auth/demo-login pre-configured demo
+persona
+Retrieve current user
+Authenticated GET /auth/me, /bootstrap profile and initial
+environmental snapshot
+Revoke session token and
+Authenticated POST /auth/logout
+clear cookies
+Retrieve 72-hour hourly
+Protected GET /air/forecast AQI forecasts and peak
+window markers
+Evaluate commute routes
+GET /
+Protected /routes/compare and calculate exposure
+POST
+reduction deltas
+Retrieve satellite thermal
+Protected GET /fire-tracker anomaly indicators (NASA
+FIRMS)
+Manage indoor purifier
+GET /
+Protected /automations/rules rules and retrieve policy
+POST
+configurations
+Approve an automation
+Protected POST /automations/approve proposal ("Allow
+once" / "Always")
+18
+==================================================
+PAGE 23
+==================================================
+Access Level Method Endpoint (/api) Purpose
+Cancel or pause an active
+Protected POST /automations/cancel
+purifier automation
+Retrieve calendar events
+GET /
+Protected /calendar/guard and generate lower-AQI
+POST
+reschedule slots
+Query Vayu Guide for
+Protected POST /agent/chat grounded health advice and
+source chips
+Generate audio narration
+Protected POST /tts/synthesize
+via the Edge TTS bridge
+5. Security & Session-Based RBAC
+• Cryptographic Hashing: User passwords are encrypted using salted scrypt hashing
+before persistence; plaintext passwords are never stored or logged.
+• Session Protection: Upon login, an opaque random session token is issued, and its
+SHA-256 digest is stored on the server. The client receives
+an HttpOnly, SameSite=Lax, and Secure cookie, mitigating cross-site scripting (XSS)
+and cross-site request forgery (CSRF).
+• Protection Boundaries & Privacy: Personal schedules, purifier approvals, and chat
+inquiries are resolved within the local application boundary; no sensitive user data is
+forwarded to external advertising or profiling networks.
+• Rate-Limiting & Guardrails: Authentication endpoints enforce bounded attempt
+windows per process, and TTS synthesis restricts input lengths to prevent abuse.
+6. Frontend Integration (The Interface)
+• Modern Next.js 16 & React 19 UI: Built with server-side rendered layouts and
+reactive client components styled with Tailwind CSS.
+19
+==================================================
+PAGE 24
+==================================================
+• Dynamic Visualizations: Includes an interactive WebGL atmospheric globe (with CSS
+mobile fallback and reduced-motion compliance), animated exposure delta bars, and
+interactive route comparison charts.
+• State Management & Human Interaction: All forms, approvals, and filters use reactive
+hooks with asynchronous fetch calls, updating states dynamically without full page
+reloads.
+• Accessibility & Guided Tours: Includes comprehensive keyboard navigation, high-
+contrast dark theme presets, and step-by-step interactive tours with narration controls
+for first-time users.
+User Interface
+The screens below were captured from the working frontend using sample (demo) data. Every
+role uses its own dashboard and navigation.
+Login Page :-
+Fig. 6: Login page (all roles)
+20
+==================================================
+PAGE 25
+==================================================
+Dashboard :
+21
+==================================================
+PAGE 26
+==================================================
+22
+==================================================
+PAGE 27
+==================================================
+23
+==================================================
+PAGE 28
+==================================================
+24
+==================================================
+PAGE 29
+==================================================
+25
+==================================================
+PAGE 30
+==================================================
+12. Test Cases & Prototype Validation
+Primary End-to-End Test Case: Morning Peak Smog & Commute Exposure Mitigation
+The following end-to-end scenario was executed on the running VayuRakshak AI prototype
+with verified scenario fixtures to validate the complete multi-module life cycle of exposure
+detection, route optimization, automated indoor protection, and calendar intervention.
+User / Resulting State /
+Step Action Performed
+Persona System Output
+Authenticated
+Signs in via demo account or enters session created;
+User
+1 credentials HttpOnly cookie
+(Commuter)
+(demo@vayurakshak.ai / Breathe@123) issued; redirected
+to /dashboard.
+Ingests forecast
+indicating severe
+User Inspects Tomorrow’s Air Plan on the morning peak (AQI
+2
+(Commuter) dashboard 286, Very Poor, peak
+window: 7:00 AM –
+10:30 AM).
+System computes
+exposure scores;
+displays baseline
+(Score 86) vs.
+Opens Route Comparison (/routes) for balanced detour
+User
+3 the IIT Delhi $\rightarrow$ Connaught (Score 62, 28% lower
+(Commuter)
+Place corridor exposure at 8:55 AM)
+and low-exposure
+delayed route (Score
+49, 43% lower
+exposure).
+26
+==================================================
+PAGE 31
+==================================================
+User / Resulting State /
+Step Action Performed
+Persona System Output
+Calculates
+explainable Indoor
+Protection Risk Score
+System / (74/100) broken
+4 Evaluates indoor exposure parameters
+Engine down by ambient
+infiltration, room
+volume, and filter
+status.
+Navigates to Protection
+Status: PROPOSED.
+User Autopilot (/automations) and reviews
+5 Purifier rule is held
+(Resident) proposed 6:30 AM pre-emptive air
+pending user consent.
+purifier routine
+Status transitions
+to SCHEDULED;
+User Tests human-in-the-loop override by
+6 immutable audit log
+(Resident) clicking "Allow once"
+entry created with
+execution timestamp.
+Status transitions
+to CANCELLED;
+User Tests cancellation override by purifier routine
+7
+(Resident) clicking "Pause / Cancel" for tomorrow stopped; zero
+unapproved actions
+executed.
+Conflict flagged
+Opens Calendar Guard (/calendar) with
+User against peak
+8 an outdoor morning jog scheduled at
+(Commuter) inversion window;
+8:00 AM
+system proposes
+27
+==================================================
+PAGE 32
+==================================================
+User / Resulting State /
+Step Action Performed
+Persona System Output
+reschedule to 5:00
+PM (AQI 142).
+Event rescheduled to
+low-risk slot; original
+User
+9 Clicks "Approve Suggestion" event safely
+(Commuter)
+preserved in audit
+history.
+Grounded retrieval
+extracts verified
+Opens Vayu Guide (/agent) and snippets with source
+User
+10 queries: "How to reduce asthma flare- citation chips;
+(Resident)
+ups during morning smog?" optional Edge
+TTS narrates
+guidance.
+Supplementary Functional Test Cases
+Test
+Case Module Tested Input / Condition Expected Output Status
+ID
+Attempt invalid
+Access denied; redirection
+TC- Authentication password or
+to /login; server PASS
+01 & Security unauthorized direct
+returns 401 Unauthorized.
+access to /automations
+Travel time adjusts with
+Exposure Select alternative
+TC- corresponding mode
+Calculation transit mode (Metro PASS
+02 multiplier; exposure delta
+Engine vs. Two-wheeler)
+recalculated dynamically.
+28
+==================================================
+PAGE 33
+==================================================
+Test
+Case Module Tested Input / Condition Expected Output Status
+ID
+Satellite thermal anomaly
+Open /fire-
+TC- Regional Fire indicators (NASA FIRMS)
+tracker during PASS
+03 Hotspots render with distance and
+stubble-burning season
+wind trajectory alerts.
+System prevents
+Trigger automation
+TC- Autopilot automated actuation;
+without PASS
+04 Safety Guard states remain locked in
+clicking "Allow once"
+pending approval mode.
+Vayu Guide provides non-
+Query diagnostic disclaimer,
+TC- Grounded RAG
+medical/diagnostic returns verified public PASS
+05 Assistant
+advice outside scope health advice, and avoids
+hallucination.
+Requests /api/tts,
+synthesizes audio stream
+Edge TTS Click "Listen /
+TC- with low latency; falls
+Narration Replay" on active tour PASS
+06 back gracefully to browser
+Bridge step
+Web Speech API if bridge
+is offline.
+29
+==================================================
+PAGE 34
+==================================================
+10. Technical Requirements (HW/SW)
+Hardware Requirements:
+Development & Server Machine: Computer with an Intel Core i5 processor (or equivalent
+multi-core AMD / Apple Silicon chip).
+RAM: Minimum 8 GB RAM (16 GB recommended for concurrent Next.js compiler, Node.js
+API runtime, and browser testing).
+Storage: Minimum 2 GB of free disk space for project source code, node_modules
+dependencies, runtime accounts store, build artifacts, and local vector index.
+Client Access Device: Accessible on any standard personal laptop, desktop, tablet, or
+smartphone equipped with a modern web browser (no mobile app download required).
+Network / Connectivity: Active internet connection for geospatial map tiles, satellite fire
+anomaly telemetry (NASA FIRMS), atmospheric data ingestion, and font/asset delivery.
+Software Requirements:
+Runtime Environment: Node.js (version 22+ LTS or Node.js 24) and npm workspaces for
+dependency and monorepo orchestration.
+Backend Stack: Node.js HTTP API service with TypeScript, native environment variable
+validation (dotenv), cryptographic security (scrypt, SHA-256 digests), and modular adapter
+contracts.
+Speech Service Bridge (Optional): Python 3.10+ runtime with FastAPI, Uvicorn, and edge-tts
+for multi-modal text-to-speech synthesis.
+Frontend Framework: Next.js 16 (App Router), React 19, TypeScript, and Tailwind CSS for
+responsive styling and component architecture.
+Data & Knowledge Persistence: Atomic file-locked JSON account store (accounts.json), pre-
+indexed markdown document knowledge base (frontend/content/*.md), and TypeScript-typed
+fixture envelopes.
+30
+==================================================
+PAGE 35
+==================================================
+Mapping & Visuals: WebGL-powered 3D atmospheric globe with CSS mobile fallback, and
+Leaflet / MapLibre for regional pollution overlays and fire signal maps.
+Development & Testing Tools: VS Code / Antigravity IDE, Postman (for API verification),
+Git / GitHub (for source control), Docker & Docker Compose (for containerized deployment),
+Playwright and Vitest/Jest (for end-to-end and unit testing).
+Browser Compatibility: Any modern standards-compliant browser (Google Chrome,
+Microsoft Edge, Mozilla Firefox, Safari) with JavaScript and WebGL enabled.
+11. Applications
+• Urban Commuters & Daily Travelers: Identifying cleaner transit routes and adjusting
+departure windows to minimize toxic inhaled pollution along high-density traffic
+corridors.
+• Vulnerable Populations & Patients: Providing tailored, non-diagnostic respiratory
+protection advisories and indoor risk scoring for asthmatics, children, and elderly
+individuals.
+• Smart Homes & Residential Societies: Automated, consent-driven pre-emptive
+scheduling of indoor air purifiers and ventilation systems ahead of severe morning
+smog inversions.
+• Educational Campuses & Universities: Coordinating student outdoor sports, morning
+assemblies, and inter-building transit with forecasted air quality windows via Calendar
+Guard.
+• Corporate Offices & Tech Parks: Managing commercial HVAC filtration schedules,
+optimizing employee commute advisories, and promoting low-exposure transit
+options.
+• Hospitals & Healthcare Facilities: Enhancing indoor air governance in sensitive wards
+and outpatient clinics during severe regional smog episodes.
+• Runners, Athletes & Fitness Clubs: Rescheduling outdoor jogs, marathons, and
+sporting events away from hazardous peak particulate spikes.
+• Municipal Corporations & Urban Planners: Analyzing exposure hot spots and traffic
+corridors to guide localized dust control and urban green buffering.
+31
+==================================================
+PAGE 36
+==================================================
+• Public Transport & Logistics Fleets: Evaluating fleet exposure along major road
+networks to assist green transit planning.
+• Smart City Environmental Control Rooms: Integrating localized, explainable risk
+indicators into municipal public health warning systems.
+12. Future Scope
+1. Live CPCB / WAQI API Integration: Connect live continuous ambient air monitoring
+stations (CAAQMS) for automated nationwide real-time AQI streaming.
+2. Native Mobile App (Android / iOS): Build cross-platform mobile apps with
+Bluetooth/NFC pairing for personal wearable air monitors and on-device alerts.
+3. Smart Home IoT Bridges (Matter / MQTT / Home Assistant): Expand Protection
+Autopilot to interface directly with commercial air purifiers (Dyson, Philips, Xiaomi)
+and motorized smart windows.
+4. Automated Calendar Sync: Provide bi-directional Google Calendar, Outlook, and
+Apple Calendar integrations to automatically propose and lock outdoor event
+reschedules.
+5. Wearable Health Sensor Telemetry: Connect Apple HealthKit and Google Health
+Connect to correlate heart rate and blood oxygen ($SpO_2$) metrics with daily exposure
+history.
+6. Machine Learning 72-Hour AQI Forecasting: Deploy dedicated FastAPI/PyTorch
+microservices utilizing LSTM or XGBoost models trained on meteorological data and
+seasonal biomass burning patterns.
+7. Direct NASA FIRMS Satellite Pipeline: Live streaming of satellite thermal anomaly
+feeds (MODIS/VIIRS) with wind trajectory modeling for early crop-residue smoke
+warnings.
+8. Multilingual Voice & UI Support: Add Hindi, Marathi, and regional Indian languages
+to Vayu Guide and text-to-speech (TTS) narration to ensure wide public accessibility.
+9. Fully Managed Cloud Infrastructure: Transition the authentication and account store to
+AWS Cognito with DynamoDB/RDS, S3-hosted assets, and CloudWatch audit
+monitoring.
+32
+==================================================
+PAGE 37
+==================================================
+13. Conclusion
+In conclusion, VayuRakshak AI demonstrates that a low-overhead, software-driven web
+platform can successfully transform passive air pollution awareness into proactive,
+accountable, and explainable personal air defense. By bringing together a modern Next.js 16
+and React 19 frontend, a modular Node.js API backend, and TypeScript data contracts, the
+platform bridges the gap between atmospheric hazard monitoring and everyday preventive
+decision-making under the foundational ethos “We don’t just inform. We protect.”
+The system replaces passive AQI notifications with quantifiable, human-in-the-loop
+interventions:
+• An explainable Indoor Protection Risk Score (0–100) that breaks down vulnerability
+into transparent factors rather than an opaque black box.
+• An intelligent commute exposure router that computes exposure deltas and
+delivers 28% to 43% lower estimated exposure on cleaner travel alternatives.
+• Calendar Guard and Protection Autopilot workflows that reschedule outdoor activities
+away from hazardous inversion peaks and automate pre-emptive air purifier runs with
+single-click approvals, pause controls, and immutable audit logs.
+• An interactive assistant (Vayu Guide) providing locally grounded, non-diagnostic
+respiratory health advice backed by text-to-speech (TTS) narration.
+The end-to-end test scenarios confirmed that all protective workflows operate seamlessly with
+high responsiveness and robust session security (salted scrypt hashing and HttpOnly cookies).
+While developed as an academic prototype rather than a production citywide IoT grid, the
+project proves that actionable exposure reduction and home protection can be achieved
+without requiring expensive proprietary hardware. VayuRakshak AI establishes a strong,
+scalable foundation for future smart city health defense systems, actively advancing SDG 3
+(Good Health & Well-being), SDG 11 (Sustainable Cities & Communities), and SDG 13
+(Climate Action).
+33
+==================================================
+PAGE 38
+==================================================
+14. References
+• Kumar, S. et al. (2021). A Smart Air Quality Monitoring and Route
+Recommendation System for Urban Commuters. IEEE Internet of Things Journal,
+Vol. 8, Issue 14, pp. 11230–11242.
+• Hernandez, M. R., & Sen, A. (2024). IoT-Driven Urban Air Pollution Forecasting
+and Public Health Advisory Systems: A Systematic Review. Atmospheric Pollution
+Research (Elsevier), Vol. 15, No. 3, 101980.
+• Sharma, P., Verma, R., & Gupta, N. (2025). Deep Learning-Based 72-Hour AQI
+Prediction with Satellite Fire Anomaly Correlation. Environmental Modelling &
+Software, Vol. 172, 105912.
+• Patel, K. D., & Zhang, H. (2025). Human-in-the-Loop Smart Indoor Air Quality
+Management and Actuation in Smart Buildings. Building and Environment, Vol.
+248, 111082.
+• Banerjee, A. et al. (2026). A Grounded Retrieval-Augmented Advisory System for
+Respiratory Wellness during Severe Smog. Journal of Biomedical Informatics, Vol.
+149, 104561.
+• Central Pollution Control Board (CPCB), Government of India. National Air
+Quality Index (NAQI) Standards and Sameer
+Portal. https://airquality.cpcb.gov.in/AQI_NCR/
+• NASA FIRMS (Fire Information for Resource Management System). Thermal
+Anomalies and Active Fire Satellite Data (MODIS/VIIRS). NASA
+Earthdata. https://firms.modaps.eosdis.nasa.gov/
+• U.S. EPA & AirNow. Asthma and Outdoor Air Pollution Public Health Resource
+Guidelines. https://www.airnow.gov/publications/asthma-and-heart-disease/
+• Next.js Documentation. App Router, React 19 Server Components, and API Route
+Handlers. Vercel. https://nextjs.org/docs
+• World Health Organization (WHO). (2021). WHO Global Air Quality Guidelines:
+Particulate Matter ($PM_{2.5}$ and $PM_{10}$), Ozone, Nitrogen Dioxide, Sulfur
+Dioxide and Carbon Monoxide. World Health Organization.
+• United Nations. Sustainable Development Goals: Goal 3 (Good Health), Goal 11
+(Sustainable Cities), and Goal 13 (Climate Action). https://sdgs.un.org/goals
+34
